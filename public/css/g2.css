@@ -1,0 +1,29 @@
+body {
+  height: 100vh;
+}
+form {
+  margin-top: 200px !important;
+  width: 70%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 2px #bbb;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 150px auto;
+  column-gap: 15px;
+}
+
+label + * {
+  margin-bottom: 15px;
+}
+input[type="submit"] {
+  justify-self: start;
+}
+
+label {
+  padding: 5px 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Gabriola", sans-serif;
+  color: white;
+}
