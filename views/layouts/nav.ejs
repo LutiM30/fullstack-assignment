@@ -19,20 +19,30 @@
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
         </li>
-        <li class="nav-item">
+
+        <% if(loggedIn) {%>
+
+        <li class="nav-item protected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/g">G</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item protected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/g2">G2</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item protected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/dashboard"
             >Dashboard</a
           >
         </li>
-        <li class="nav-item">
+
+        <li class="nav-item protected" id="logout">
+          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Logout</a>
+        </li>
+
+        <% } else { %>
+        <li class="nav-item unprotected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a>
         </li>
+        <% } %>
       </ul>
     </div>
   </div>

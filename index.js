@@ -4,7 +4,8 @@ require("ejs");
 
 // Internal
 const DBConnection = require("./utils/functions/DBConnection");
-const getAllRoutes = require("./utils/functions/getRoutes");
+const getAllRoutes = require("./utils/functions/routes");
+
 const getApp = require("./utils/functions/setUpApp");
 
 // Application

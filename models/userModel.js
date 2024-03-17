@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userDocument = require("./documents/userDocument");
 const carDocument = require("./documents/carDocument");
@@ -11,19 +12,30 @@ const Model = mongoose.model;
 const getNewSchema = (document) => new Schema(document, internalFields);
 
 const carSchema = getNewSchema(carDocument);
-const userSchema = getNewSchema(userDocument(carSchema));
+const userSchema = getNewSchema(userDocument(carSchema), { typeKey: "$type" });
 
 userSchema.pre("save", function (next) {
   const user = this;
-  bcrypt.hash(
-    user.license_number,
-    consts.howManyTimesEncrypt,
-    (error, hash) => {
-      user.license_number = hash;
-      console.log({ user });
+  const encrypt = (key, next = () => {}) =>
+    bcrypt.hash(user[key], consts.howManyTimesEncrypt, (error, hash) => {
+      user[key] = hash;
       next();
-    }
-  );
+    });
+  encrypt("license_number");
+  encrypt("password", next);
+});
+
+userSchema.pre("find", function (next) {
+  const user = this;
+  const encrypt = (key, next = () => {}) =>
+    bcrypt.hash(user[key], consts.howManyTimesEncrypt, (error, hash) => {
+      user[key] = hash;
+      next();
+    });
+  if (user?.license_number) {
+    encrypt("license_number");
+  }
+  encrypt("password", next);
 });
 
 // export mongoose model

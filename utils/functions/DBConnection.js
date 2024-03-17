@@ -5,7 +5,6 @@ const DBConnection = () => {
   const mongoDBCs = "mongodb+srv://root:root@fullstack.hzq526l.mongodb.net/";
   try {
     connect(mongoDBCs);
-    console.log("Connection to Database is Made!!!");
   } catch (error) {
     console.log("ERROR 504: Invalid Connection --- ", error);
   }

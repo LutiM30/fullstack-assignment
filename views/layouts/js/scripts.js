@@ -30,4 +30,28 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     scrollPos = currentTop;
   });
+
+  // Check for the presence of the cookie on the client-side
+  if (document.cookie.includes("licenceSiteUserAuth")) {
+    const navItemsToHide = document.getElementsByClassName("unprotected");
+    for (const item of navItemsToHide) {
+      console.log({ item });
+      item.style.display = "none";
+    }
+
+    const navItemsToShow = document.getElementsByClassName("protected");
+    for (const item of navItemsToShow) {
+      item.style.display = "block";
+    }
+  } else {
+    const navItemsToHide = document.getElementsByClassName("protected");
+    for (const item of navItemsToHide) {
+      item.style.display = "none";
+    }
+
+    const navItemsToShow = document.getElementsByClassName("unprotected");
+    for (const item of navItemsToShow) {
+      item.style.display = "block";
+    }
+  }
 });

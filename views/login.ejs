@@ -14,23 +14,58 @@
     >
       <!-- Sign Up -->
       <div class="container__form container--signup">
-        <form action="#" class="form" id="form1">
+        <form action="/g2/new-user" method="post" class="form" id="form1">
           <h2 class="form__title">Sign Up</h2>
-          <input type="text" placeholder="username" class="input" />
-          <input type="email" placeholder="Email" class="input" />
-          <input type="password" placeholder="Password" class="input" />
-          <button class="btn">Sign Up</button>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="username"
+            class="input"
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="password"
+            class="input"
+          />
+          <input
+            id="cpassword"
+            name="cpassword"
+            type="password"
+            placeholder="Confirm Password"
+            class="input"
+          />
+          <select name="userType" id="userType" class="input">
+            <% data.userTypes.forEach(function(userType) { %>
+            <option value="<%= userType.value %>"><%= userType.name %></option>
+            <% }); %>
+          </select>
+          <button class="btn" type="submit">Sign Up</button>
         </form>
       </div>
 
       <!-- Sign In -->
       <div class="container__form container--signin">
-        <form action="#" class="form" id="form2">
+        <form action="/user/signin" method="post" class="form" id="form2">
           <h2 class="form__title">Sign In</h2>
-          <input type="text" placeholder="username" class="input" />
-          <input type="password" placeholder="Password" class="input" />
+          <input
+            type="text"
+            placeholder="username"
+            id="username"
+            name="username"
+            class="input"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            class="input"
+            name="password"
+          />
           <a href="#" class="link">Forgot your password?</a>
-          <button class="btn">Sign In</button>
+          <button class="btn" type="submit">Sign In</button>
         </form>
       </div>
 
@@ -50,6 +85,9 @@
     <!-- Footer-->
     <%-include('layouts/footer') %> <%-include('layouts/scripts') %>
     <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const signin = parseInt(urlParams.get("signin"));
+
       const signUpButton = document.getElementById("signUp");
       const signInButton = document.getElementById("signIn");
       const container = document.getElementById("container");
@@ -61,6 +99,8 @@
       signInButton.addEventListener("click", () => {
         container.classList.remove("right-panel-active");
       });
+
+      signin ? signInButton.click() : "";
     </script>
   </body>
 </html>
