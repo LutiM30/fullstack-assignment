@@ -1,4 +1,4 @@
-const redirectIfAuthenticated = require("../../../../../controller/redirectIfAuthenticatedMiddleWare");
+const redirectIfAuthenticated = require("../../../../../middleware/redirectIfAuthenticatedMiddleWare");
 const {
   getWithDataAlreadyLoggedInPages,
 } = require("../../../../consts/routes");

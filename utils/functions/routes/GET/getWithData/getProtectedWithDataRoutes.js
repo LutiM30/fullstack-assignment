@@ -1,4 +1,4 @@
-const authMiddleware = require("../../../../../controller/authMiddleware");
+const authMiddleware = require("../../../../../middleware/authMiddleware");
 const { getWithDataProtectedPages } = require("../../../../consts/routes");
 
 const createGetProtectedWithDataRoutes = (app, route, render) =>

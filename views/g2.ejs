@@ -12,9 +12,15 @@
     <form id="g2Form" action="/g2/new-user" method="post">
       <!-- name -->
       <label for="fname">First Name</label>
-      <input type="text" id="fname" name="fname" />
+      <input type="text" id="fname" name="fname" value="<%= user.fname %>" />
       <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lname" />
+      <input
+        type="text"
+        id="lname"
+        name="lname"
+        value="<%= user.lname %>"
+        value="<%= user.license_number %>"
+      />
 
       <label for="lnumber"
         >License Number – must be 8 characters (alpha numeric)</label
@@ -22,19 +28,39 @@
       <input type="text" id="lnumber" name="license_number" />
 
       <label for="age">Age</label>
-      <input type="number" id="age" name="age" />
+      <input type="number" id="age" name="age" value="<%= user.age %>" />
 
       <label for="make">Car Make</label>
-      <input type="text" id="make" name="make" />
+      <input
+        type="text"
+        id="make"
+        name="make"
+        value="<%= user.car_details.make %>"
+      />
 
       <label for="model">Model</label>
-      <input type="text" id="model" name="model" />
+      <input
+        type="text"
+        id="model"
+        name="model"
+        value="<%= user.car_details.model %>"
+      />
 
       <label for="year">Year</label>
-      <input type="number" id="year" name="year" />
+      <input
+        type="number"
+        id="year"
+        name="year"
+        value="<%= user.car_details.year %>"
+      />
 
       <label for="plate">Plate Number</label>
-      <input type="text" id="plate" name="plateno" />
+      <input
+        type="text"
+        id="plate"
+        name="plateno"
+        value="<%= user.car_details.plateno %>"
+      />
 
       <br />
       <input type="submit" />

@@ -3,7 +3,6 @@ module.exports = (req, res, next) => {
     // User is logged in, redirect to home page
     return res.redirect("/");
   } else {
-    console.log("called else");
     // User is not logged in, proceed to the login page
     next();
   }

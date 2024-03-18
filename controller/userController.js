@@ -9,12 +9,33 @@ const ObjectId = require("mongodb").ObjectId;
 const newUser = async (req, res, redirectRoute = "/") => {
   const userData = { ...fillUser(req.body), cpassword: req.body.cpassword };
 
-  if (userData?.password === userData?.cpassword) {
+  if (
+    !req.cookies.userLogin ? userData?.password === userData?.cpassword : true
+  ) {
+    let origData = {};
+    if (req.cookies.userLogin) {
+      origData = await userModel
+        ?.findOne({ _id: req.cookies.userLogin })
+        .exec();
+    }
+
     delete userData.cpassword;
     const newUserData = new userModel(userData);
+    userData.password = origData.password;
+    userData.username = origData.username;
+    userData.userType = origData.userType;
 
     try {
-      await newUserData?.save();
+      if (!req.cookies.userLogin) {
+        console.log("here");
+        await newUserData?.save();
+      } else {
+        console.log("in else");
+        await userModel?.findOneAndReplace(
+          { _id: req.cookies.userLogin },
+          { ...userData }
+        );
+      }
 
       res.redirect(redirectRoute);
     } catch (error) {
@@ -71,15 +92,16 @@ const updateUser = async (req, res) => {
 
 // One Single User
 const getUserByLicenseNumber = async (req, res) => {
-  const license_number = req.query.licenseNumber;
-
   try {
     // Query MongoDB based on plateno
-    const user = await userModel?.findOne({ license_number })?.lean();
+
+    const user = await userModel.findById(req.cookies.userLogin)?.lean();
+
     res.render("g", {
       user,
       currentPage: "/g/get-user",
       loggedIn: userLoggedIn(req),
+      user,
     });
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -94,12 +116,16 @@ const getUsers = async (res, page = "index") =>
     ?.lean()
     ?.then((blogData) => renderPageWithData(res, page, blogData));
 
-const loginPageWithUserTypes = async (req, res) =>
+const loginPageWithUserTypes = async (req, res) => {
+  const user = await userModel.findById(req.cookies.userLogin)?.lean();
+
   renderPageWithData(res, "login", {
     userTypes,
     user: req.cookies[userCookie] || "",
     loggedIn: userLoggedIn(req),
+    user,
   });
+};
 
 const authenticateUser = async (req, res) => {
   const userData = { ...req.body };
@@ -112,7 +138,7 @@ const authenticateUser = async (req, res) => {
       .lean();
 
     bcrypt.compare(password, user.password, async (error, same) =>
-      same ? await signinTheUser(user) : res.redirect("/login?signin=1")
+      same ? await signinTheUser(user) : res.redirect("/login")
     );
   }
 
