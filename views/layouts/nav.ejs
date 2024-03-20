@@ -20,7 +20,7 @@
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
         </li>
 
-        <% if(loggedIn) {%> <% if( user && user?.userType === "driver") {%>
+        <% if(data.loggedIn) {%> <% if( user && user?.userType === "driver") {%>
 
         <li class="nav-item protected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/g">G</a>
