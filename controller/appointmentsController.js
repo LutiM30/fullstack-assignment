@@ -110,12 +110,10 @@ const createAppointment = async (req, res) => {
         const updatedSlot = await slotsModel.findByIdAndUpdate(
           appointmentData.slotId,
           { isSlotAvailable: false },
-          { new: true } // To return the updated document
+          { new: true }
         );
 
-        // Check if the slot was found and updated
         if (updatedSlot) {
-          console.log("Slot updated successfully:", updatedSlot);
         } else {
           console.log("Slot not found or not updated");
         }
