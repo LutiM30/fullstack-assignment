@@ -65,6 +65,29 @@
       <br />
       <input type="submit" />
     </form>
+
+    <form id="bookAppointMent" action="/g2" method="get">
+      <label for="plate">Select Date</label>
+      <input type="date" id="appointmentDate" name="appointmentDate" />
+
+      <br />
+      <input type="submit" />
+    </form>
+
+    <% if(slotsData.length) {%>
+
+    <form id="bookAppointMent" action="/appointments/book" method="post">
+      <label for="slotId">Book Appointment</label>
+      <select name="slotId" id="slotId" class="input">
+        <% slotsData.forEach(function(slot) { %>
+        <option value="<%= slot.value %>"><%= slot.name %></option>
+        <% }); %>
+      </select>
+
+      <br />
+      <input type="submit" />
+    </form>
+    <% } %>
     <!-- Footer-->
     <%-include('layouts/footer') %> <%-include('layouts/scripts') %>
   </body>

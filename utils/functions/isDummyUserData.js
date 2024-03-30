@@ -1,5 +1,4 @@
 const { userDummyData } = require("../consts");
-const bcrypt = require("bcrypt");
 
 module.exports = (user) => {
   const userData = { ...userDummyData };

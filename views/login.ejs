@@ -38,7 +38,7 @@
             class="input"
           />
           <select name="userType" id="userType" class="input">
-            <% data.userTypes.forEach(function(userType) { %>
+            <% userTypes.forEach(function(userType) { %>
             <option value="<%= userType.value %>"><%= userType.name %></option>
             <% }); %>
           </select>

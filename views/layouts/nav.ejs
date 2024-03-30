@@ -2,6 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
   <div class="container px-4 px-lg-5">
     <a class="navbar-brand" href="/">Driving License</a>
+
     <button
       class="navbar-toggler"
       type="button"
@@ -14,13 +15,14 @@
       Menu
       <i class="fas fa-bars"></i>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto py-4 py-lg-0">
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a>
         </li>
 
-        <% if(data.loggedIn) {%> <% if( user && user?.userType === "driver") {%>
+        <% if(loggedIn) {%> <% if( user && user?.userType === "driver") {%>
 
         <li class="nav-item protected">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/g">G</a>
@@ -29,10 +31,18 @@
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="/g2">G2</a>
         </li>
 
+        <% } %> <% if( user && user?.userType === "admin") {%>
+
+        <li class="nav-item protected">
+          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/appointments"
+            >Appointments</a
+          >
+        </li>
+
         <% } %>
 
         <li class="nav-item protected" id="logout">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Logout</a>
+          <a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a>
         </li>
 
         <% } else { %>

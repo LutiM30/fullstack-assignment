@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%-include('layouts/head') %>
+  <head>
+    <link href="/css/g2.css" rel="stylesheet" />
+  </head>
+  <body style="background-color: black">
+    <!-- Navigation-->
+    <%-include('layouts/nav') %>
+    <!-- Page Header-->
+    <form id="appointmentForm" action="/appointment/new-slot" method="post">
+      <label for="appointmentDate">Appointments Date</label>
+      <input type="date" id="appointmentDate" name="appointmentDate" />
+
+      <label for="startsAt">Appointment Start Time</label>
+      <input type="time" id="startsAt" name="startsAt" />
+
+      <label for="endsAt">Appointment End Time</label>
+      <input type="time" id="endsAt" name="endsAt" />
+
+      <button class="btn" type="submit">Create</button>
+    </form>
+    <!-- Footer-->
+    <%-include('layouts/footer') %> <%-include('layouts/scripts') %>
+  </body>
+</html>

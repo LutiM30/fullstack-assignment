@@ -2,8 +2,7 @@ const userModel = require("../models/userModel");
 const { fillUser, userTypes, userCookie } = require("../utils/consts");
 const bcrypt = require("bcrypt");
 const userLoggedIn = require("../utils/functions/userLoggedIn");
-const renderPageWithData = (res, page, data) => res?.render(page, { data });
-const ObjectId = require("mongodb").ObjectId;
+const renderPageWithData = (res, page, data) => res?.render(page, { ...data });
 
 // CREATE NEW User
 const newUser = async (req, res, redirectRoute = "/") => {
@@ -27,10 +26,8 @@ const newUser = async (req, res, redirectRoute = "/") => {
 
     try {
       if (!req.cookies.userLogin) {
-        console.log("here");
         await newUserData?.save();
       } else {
-        console.log("in else");
         await userModel?.findOneAndReplace(
           { _id: req.cookies.userLogin },
           { ...userData }
@@ -63,6 +60,7 @@ const updateUser = async (req, res) => {
 
   const data = await userModel.findOne(chngeUsrInfoByLicense);
   await userModel.updateOne(chngeUsrInfoByLicense, {
+    license_number: req.query.license_number,
     car_details: {
       make: req.body.make,
       model: req.body.model,
@@ -114,7 +112,7 @@ const getUsers = async (res, page = "index") =>
   await userModel
     ?.find()
     ?.lean()
-    ?.then((blogData) => renderPageWithData(res, page, blogData));
+    ?.then((userData) => renderPageWithData(res, page, userData));
 
 const loginPageWithUserTypes = async (req, res) => {
   const user = await userModel.findById(req.cookies.userLogin)?.lean();
@@ -150,9 +148,23 @@ const authenticateUser = async (req, res) => {
     res.cookie("userLogin", user._id, {
       maxAge: 604800000,
     });
-    req.session.userId = user._id;
+
+    console.log(req);
+    req.session.userId = user?._id;
     res.redirect("/");
   };
+};
+
+const signout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Error logging out");
+    } else {
+      res.clearCookie("userLogin");
+      res.redirect("/login");
+    }
+  });
 };
 
 const userController = {
@@ -162,6 +174,7 @@ const userController = {
   updateOne: updateUser,
   loginPage: loginPageWithUserTypes,
   signin: authenticateUser,
+  signout: signout,
 };
 
 module.exports = userController;

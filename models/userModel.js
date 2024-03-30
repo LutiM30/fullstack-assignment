@@ -25,6 +25,16 @@ userSchema.pre("save", function (next) {
   encrypt("password", next);
 });
 
+userSchema.pre("updateOne", function (next) {
+  const user = this;
+  const encrypt = (key, next = () => {}) =>
+    bcrypt.hash(user[key], consts.howManyTimesEncrypt, (error, hash) => {
+      user[key] = hash;
+      next();
+    });
+  encrypt("license_number", next);
+});
+
 userSchema.pre("find", function (next) {
   const user = this;
   const encrypt = (key, next = () => {}) =>
@@ -38,7 +48,6 @@ userSchema.pre("find", function (next) {
   encrypt("password", next);
 });
 
-// export mongoose model
 const userModel = Model("users", userSchema);
 
 module.exports = userModel;

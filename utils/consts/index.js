@@ -1,3 +1,9 @@
+const userTypes = [
+  { key: 1, name: "Driver", value: "driver" },
+  { key: 2, name: "Examiner", value: "examiner" },
+  { key: 3, name: "Admin", value: "admin" },
+];
+
 const consts = {
   mongo: {
     upsert: { upsert: true },
@@ -40,11 +46,8 @@ const consts = {
     },
   },
 
-  userTypes: [
-    { key: 1, name: "Driver", value: "driver" },
-    { key: 1, name: "Examiner", value: "examiner" },
-    { key: 1, name: "Admin", value: "admin" },
-  ],
+  userTypes,
+
   userCookie: "licenceSiteUserAuth",
 };
 
